@@ -1,0 +1,39 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: info-repo
+spec:
+  type: ClusterIP
+  selector:
+    app: info-repo
+  ports:
+    - protocol: TCP
+      port: 3897
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: info-repo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: info-repo
+    spec:
+      containers:
+        - name: info-repo
+          image: objectcomputing/opendds:release-DDS-3.12
+          command:
+            - DCPSInfoRepo
+            - "-ORBListenEndpoints"
+            - "iiop://:3897/hostname_in_ior=info-repo"
+            # - "-DCPSDebugLevel"
+            # - "10"
+            # - "-ORBDebugLevel"
+            # - "10"
+            # - "-DCPSTransportDebugLevel"
+            # - "6"
+          ports:
+            - containerPort: 3897

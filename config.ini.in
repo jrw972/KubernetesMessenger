@@ -1,0 +1,10 @@
+[common]
+DCPSBitTransportIPAddress=_PUBLIC_IP_
+DCPSBitTransportPort=3899
+DCPSGlobalTransportConfig=myconfig
+[config/myconfig]
+transports=mytcp
+[transport/mytcp]
+transport_type=tcp
+local_address=_PUBLIC_IP_:3898
+pub_address=_PUBLIC_IP_:3898

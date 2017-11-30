@@ -1,0 +1,18 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: subscriber
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: subscriber
+    spec:
+      containers:
+        - name: subscriber
+          image: wilsonj/exp:latest
+          command: ["bash", "-c", "make-config.sh && subscriber -DCPSInfoRepo info-repo:3897 -DCPSConfigFile config.ini"]
+          ports:
+            - containerPort: 3898
+            - containerPort: 3899

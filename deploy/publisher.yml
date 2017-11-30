@@ -1,0 +1,18 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: publisher
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: publisher
+    spec:
+      containers:
+        - name: publisher
+          image: wilsonj/exp:latest
+          command: ["bash", "-c", "make-config.sh && publisher -DCPSInfoRepo info-repo:3897 -DCPSConfigFile config.ini"]
+          ports:
+            - containerPort: 3898
+            - containerPort: 3899
